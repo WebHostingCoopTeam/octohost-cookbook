@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-default['vagrant']['keys'] = 'https://raw.github.com/nonfiction/keys/master/keys'
-default['git']['keys'] = 'https://raw.github.com/nonfiction/keys/master/gitreceive-keys'
+default['vagrant']['keys'] = 'https://raw.github.com/webhostingcoopteam/keys/master/keys'
+default['git']['keys'] = 'https://raw.github.com/webhostingcoopteam/keys/master/gitreceive-keys'
 
 default['ruby']['version'] = '2.1'
