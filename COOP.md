@@ -11,6 +11,10 @@ and also make an appropriate gitreceive line
 
 `command="GITUSER=git /usr/bin/gitreceive run $USER $GITRECEIVEKEY",no-agent-forwarding,no-pty,no-user-rc,no-X11-forwarding,no-port-forwarding ssh-rsa $RSAKEY user@host`
 
+FYI - I'm not even certain I labeled the above variables correctly.  Just a wild guess. 
+I had to install https://github.com/progrium/gitreceive
+and had it create the necessary gitreceive line
+
 then
 
     git clone https://github.com/WebHostingCoopTeam/octohost-cookbook.git
@@ -37,6 +41,28 @@ Then:
     git remote add octo git@serve.octodev.io:harp.git
     git push octo master
     lynx http://harp.octodev.io
+
+ Add yourself here:
+
+https://github.com/WebHostingCoopTeam/keys
+
+
+also fun things to try once you've got one up:
+
+http://octohost.io/languages.html
+
+just about every link goes to a repo that you simply
+(s/$THING/YourThingFromAbovePage/)
+
+    git clone git@github.com:octohost/$THING.git && cd $THING
+    git remote add octo git@serve.octodev.io:$THING.git
+    git push octo master
+
+grab all the repos at once from octohost at once!
+    mkdir Octohost; cd Octohost
+    curl -s "https://api.github.com/users/octohost/repos" | ruby -rjson -e 'JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
+
+
 
 You know have your own local, private octohost for development and testing - with a free wildcard dns record.
 
