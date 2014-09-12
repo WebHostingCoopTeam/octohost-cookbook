@@ -37,11 +37,12 @@ end
 desc "Cleanup Vendor directory"
 task :cleanup_vendor do
   sh 'rm -rf vendor/cookbooks/*'
+  sh 'rm -rf vendor'
   sh 'rm -rf cookbooks && rm -rf nodes'
 end
 
 task :berksinstall do
-  sh 'berks vendor --path vendor/cookbooks'
+  sh 'berks vendor vendor/cookbooks'
 end
 
 desc "build Vagrant box"
@@ -65,7 +66,7 @@ task :build => [:cleanup_vendor, :lint, :spec, :tailor, :taste, :rubocop, :packe
 task :packer => [:cleanup_vendor, :packer_build]
 
 task :packer_build do
-  sh 'berks vendor --path vendor/cookbooks'
+  sh 'berks vendor vendor/cookbooks'
   sh 'packer build template.json'
 end
 
@@ -75,7 +76,7 @@ task :build_ami => [:cleanup_vendor, :lint, :spec, :tailor, :taste, :rubocop, :p
 task :packer_ami => [:cleanup_vendor, :packer_build_ami]
 
 task :packer_build_ami do
-  sh 'berks vendor --path vendor/cookbooks'
+  sh 'berks vendor vendor/cookbooks'
   sh 'packer build -only=amazon-ebs template.json'
 end
 
@@ -85,7 +86,7 @@ task :build_droplet => [:cleanup_vendor, :lint, :spec, :tailor, :taste, :rubocop
 task :packer_droplet => [:cleanup_vendor, :packer_build_droplet]
 
 task :packer_build_droplet do
-  sh 'berks vendor --path vendor/cookbooks'
+  sh 'berks vendor vendor/cookbooks'
   sh 'packer build -only=digitalocean template.json'
 end
 
@@ -95,7 +96,7 @@ task :build_openstack => [:cleanup_vendor, :lint, :spec, :tailor, :taste, :ruboc
 task :packer_openstack => [:cleanup_vendor, :packer_build_openstack]
 
 task :packer_build_openstack do
-  sh 'berks vendor --path vendor/cookbooks'
+  sh 'berks vendor vendor/cookbooks'
   sh 'packer build -only=openstack template.json'
 end
 
@@ -105,7 +106,7 @@ task :build_gce => [:cleanup_vendor, :lint, :spec, :tailor, :taste, :rubocop, :p
 task :packer_gce => [:cleanup_vendor, :packer_build_gce]
 
 task :packer_build_gce do
-  sh 'berks vendor --path vendor/cookbooks'
+  sh 'berks vendor vendor/cookbooks'
   sh 'packer build -only=googlecompute template.json'
 end
 
@@ -116,7 +117,7 @@ end
 desc "Usage: rake knife_solo user={user} ip={ip.address.goes.here}"
 task :knife_solo do
   sh 'rm -rf cookbooks && rm -rf nodes'
-  sh 'mkdir cookbooks && berks vendor --path cookbooks'
+  sh 'mkdir cookbooks && berks vendor cookbooks'
   sh "mkdir nodes && echo '{\"run_list\":[\"octohost::default\"]}' > nodes/#{ENV['ip']}.json"
   sh "bundle exec knife solo bootstrap #{ENV['user']}@#{ENV['ip']}"
 end

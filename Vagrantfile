@@ -18,7 +18,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   local octohost
   #
   config.vm.network :private_network, ip: "192.168.62.86"
-
+  #config.vm.guest_redirect_dns = false
+  #config.vm.provider "virtualbox" do |vb|
+  #  vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  #end
   # Install: vagrant plugin install vagrant-omnibus
   config.omnibus.chef_version = :latest
 
