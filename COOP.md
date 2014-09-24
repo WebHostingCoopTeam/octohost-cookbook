@@ -47,7 +47,6 @@ Then:
 
 https://github.com/WebHostingCoopTeam/keys
 
-
 also fun things to try once you've got one up:
 
 http://octohost.io/languages.html
@@ -62,8 +61,6 @@ just about every link goes to a repo that you simply
 grab all the repos at once from octohost at once!
     mkdir Octohost; cd Octohost
     curl -s "https://api.github.com/users/octohost/repos" | ruby -rjson -e 'JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
-
-
 
 You know have your own local, private octohost for development and testing - with a free wildcard dns record.
 
