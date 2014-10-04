@@ -47,7 +47,7 @@ Then:
 
 https://github.com/WebHostingCoopTeam/keys
 
-also fun things to try once you've got one up:
+These are also some fun things to try once you've got one up:
 
 http://octohost.io/languages.html
 
