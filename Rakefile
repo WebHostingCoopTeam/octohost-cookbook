@@ -46,11 +46,11 @@ task :berksinstall do
 end
 
 desc "build Vagrant box"
-task :build_vagrant => [:cleanup_vendor, :cleanup_vagrant, :berksinstall, :vagrantup]
-task :vagrant => :build_vagrant
+task :build_vagrant_without_tests => [:cleanup_vendor, :cleanup_vagrant, :berksinstall, :vagrantup]
 
 desc "Syntax check and build Vagrant box"
-task :build_vagrant_with_tests => [:cleanup_vendor, :cleanup_vagrant, :lint, :spec, :tailor, :taste, :rubocop, :berksinstall, :vagrantup]
+task :build_vagrant => [:cleanup_vendor, :cleanup_vagrant, :lint, :spec, :tailor, :taste, :rubocop, :berksinstall, :vagrantup]
+task :vagrant => :build_vagrant
 
 task :vagrantup do
   sh 'vagrant up --provision'
@@ -78,6 +78,11 @@ task :packer_ami => [:cleanup_vendor, :packer_build_ami]
 task :packer_build_ami do
   sh 'berks vendor vendor/cookbooks'
   sh 'packer build -only=amazon-ebs template.json'
+end
+
+task :packer_build_qemu do
+  sh 'berks vendor vendor/cookbooks'
+  sh 'packer build -only=qemu template.json'
 end
 
 desc "Syntax check and build Droplet"
