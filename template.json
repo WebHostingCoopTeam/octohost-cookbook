@@ -1,5 +1,7 @@
 {
     "variables": {
+        "chef_version": "provisionerless",
+        "mirror": "http://releases.ubuntu.com",
         "aws_access_key": "",
         "aws_secret_key": ""
     },
@@ -47,7 +49,7 @@
               "iso_checksum": "4d94f6111b8fe47da94396180ce499d8c0bb44f3",
               "iso_checksum_type": "sha1",
               "iso_url": "{{user `mirror`}}/14.04/ubuntu-14.04-server-amd64.iso",
-              "output_directory": "packer-ubuntu-14.04-amd64-qemu",
+              "output_directory": "builds/packer-ubuntu-14.04-amd64-qemu",
               "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
               "ssh_password": "vagrant",
               "ssh_port": 22,
@@ -83,9 +85,28 @@
               "image_name": "octohost-{{timestamp}}"
             }],
 
-    "provisioners": [{
-      "type": "chef-solo",
-      "cookbook_paths": ["./vendor/cookbooks"],
-      "run_list": [ "octohost" ]
-    }]
+    "provisioners": [
+      {
+        "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+        "scripts": [
+          "scripts/ubuntu/update.sh",
+          "scripts/ubuntu/requirements.sh",
+          "scripts/common/sshd.sh",
+          "scripts/ubuntu/networking.sh",
+          "scripts/ubuntu/sudoers.sh",
+          "scripts/common/vagrant.sh",
+          "scripts/common/chef.sh",
+          "scripts/ubuntu/cleanup.sh",
+          "scripts/common/minimize.sh"
+        ],
+        "type": "shell",
+        "only": ["qemu"],
+        "environment_vars": [ "CHEF_VERSION={{user `chef_version`}}" ]
+      },
+      {
+        "type": "chef-solo",
+        "cookbook_paths": ["./vendor/cookbooks"],
+        "run_list": [ "octohost" ]
+      }
+    ]
 }

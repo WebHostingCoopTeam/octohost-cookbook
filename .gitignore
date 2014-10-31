@@ -31,3 +31,5 @@ nodes/
 coverage/
 
 .envrc
+packer_cache/
+builds/

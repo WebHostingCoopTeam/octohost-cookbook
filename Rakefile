@@ -80,6 +80,9 @@ task :packer_build_ami do
   sh 'packer build -only=amazon-ebs template.json'
 end
 
+desc "Syntax check and build QEMU"
+task :build_qemu => [:cleanup_vendor, :packer_build_qemu]
+
 task :packer_build_qemu do
   sh 'berks vendor vendor/cookbooks'
   sh 'packer build -only=qemu template.json'
