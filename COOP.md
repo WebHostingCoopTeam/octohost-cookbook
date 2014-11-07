@@ -21,7 +21,7 @@ then
     git clone https://github.com/WebHostingCoopTeam/octohost-cookbook.git
     cd octohost-cookbook
     bundle install
-    rake build_vagrant
+    rake build_vagrant_without_tests
 
 The wildcard domain record *.octodev.io will work for anyone at 192.168.62.86. An octohost is much more useful when your own keys are installed. Even though we can't get to your non-routable 192.168.62.86 address, please don't install our keys on your server.
 
