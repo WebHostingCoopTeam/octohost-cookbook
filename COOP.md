@@ -70,4 +70,6 @@ You're welcome.
 
 Now that you've done that why not grab all the WebHostingCoopTeam repos?
 
+```
 curl -s "https://api.github.com/users/WebHostingCoopTeam/repos" | ruby -rjson -e 'JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
+```
