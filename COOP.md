@@ -16,6 +16,9 @@ FYI - I'm not even certain I labeled the above variables correctly.  Just a wild
 I had to install https://github.com/progrium/gitreceive
 and had it create the necessary gitreceive line
 
+I have a docker file that will do the above for you here:
+https://github.com/joshuacox/gitrecievelinemaker
+
 then
 
     git clone https://github.com/WebHostingCoopTeam/octohost-cookbook.git
