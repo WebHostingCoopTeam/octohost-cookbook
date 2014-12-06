@@ -79,6 +79,15 @@ curl -s "https://api.github.com/users/WebHostingCoopTeam/repos" | ruby -rjson -e
 
 If you are keyed for the new octohost this is what you need to do:
 
+```
     git clone git@github.com:octohost/$THING.git && cd $THING
     git remote add octo git@65.67.51.188:$THING.git
     git push octo master
+```
+
+This is useful in your `~/.ssh/config`
+```
+Host 65.67.51.188
+    Port 16222
+```
+
