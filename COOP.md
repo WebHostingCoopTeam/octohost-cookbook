@@ -76,3 +76,9 @@ Now that you've done that why not grab all the WebHostingCoopTeam repos?
 ```
 curl -s "https://api.github.com/users/WebHostingCoopTeam/repos" | ruby -rjson -e 'JSON.load(STDIN.read).each {|repo| %x[git clone #{repo["ssh_url"]} ]}'
 ```
+
+If you are keyed for the new octohost this is what you need to do:
+
+    git clone git@github.com:octohost/$THING.git && cd $THING
+    git remote add octo git@65.67.51.188:$THING.git
+    git push octo master
