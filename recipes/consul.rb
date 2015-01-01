@@ -1,9 +1,9 @@
 # encoding: utf-8
 #
 # Cookbook Name:: octohost
-# Recipe:: vhost.rb
+# Recipe:: consul
 #
-# Copyright (C) 2014, Darron Froese <darron@froese.org>
+# Copyright (C) 2013, Darron Froese <darron@froese.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,14 +18,17 @@
 # limitations under the License.
 #
 
-bash 'pull default virtualhost' do
-  user 'root'
-  cwd '/tmp'
-  code <<-EOH
-    docker pull octohost/00default
-    docker tag octohost/00default octoprod/00default
-    /usr/bin/octo domains:set 00default default.octodev.io
-    /usr/bin/octo start 00default
-    /usr/bin/octo services:register
-  EOH
+remote_file node['jq']['path'] do
+  source node['jq']['url']
+  owner 'root'
+  group 'root'
+  mode '00755'
+  action :create
+end
+
+cookbook_file '/usr/bin/consulkv' do
+  source 'consulkv'
+  owner 'root'
+  group 'root'
+  mode '0755'
 end

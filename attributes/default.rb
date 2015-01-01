@@ -22,3 +22,21 @@ default['vagrant']['keys'] = 'https://raw.github.com/webhostingcoopteam/keys/mas
 default['git']['keys'] = 'https://raw.github.com/webhostingcoopteam/keys/master/gitreceive-keys'
 
 default['ruby']['version'] = '2.1'
+
+default['consul']['encrypt'] = 'p4T1eTQtKji/Df3VrMMLzg=='
+default['consul']['install_method'] = 'binary'
+default['consul']['data_dir'] = '/var/cache/octohost'
+default['consul']['bind_addr'] = '192.168.62.86'
+default['consul']['client_address'] = '192.168.62.86'
+default['consul']['datacenter'] = 'dc1'
+default['consul']['enable_syslog'] = true
+default['consul']['node_name'] = 'octodev-master'
+default['consul']['install_dir'] = '/usr/local/bin'
+default['consul']['recursor'] = '8.8.8.8'
+default['consul']['service_user'] = 'root'
+default['consul']['service_group'] = 'root'
+
+default['consul']['serve_ui'] = true
+
+default['jq']['url'] = 'http://stedolan.github.io/jq/download/linux64/jq'
+default['jq']['path'] = '/usr/bin/jq'

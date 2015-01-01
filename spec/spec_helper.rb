@@ -2,8 +2,6 @@
 require 'rspec/expectations'
 require 'chefspec'
 require 'chefspec/berkshelf'
-require 'coveralls'
-Coveralls.wear!
 
 RSpec.configure do |config|
   # Specify the path for Chef Solo to find cookbooks
@@ -23,9 +21,6 @@ RSpec.configure do |config|
 
   # Specify the operating version to mock Ohai data from
   config.version = '14.04'
-
-  # Use color output for RSpec
-  config.color_enabled = true
 
   # Use documentation output formatter
   # config.formatter = :documentation

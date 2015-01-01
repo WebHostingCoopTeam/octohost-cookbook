@@ -1,21 +1,19 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "berkshelf",  "~> 2.0"
-gem "chef",       "~> 11.0"
-gem "chefspec",   "~> 3.4"
-gem "foodcritic", "~> 3.0"
-gem "rake"
-gem "tailor"
-gem "rubocop"
-gem "chef-taste"
-gem 'coveralls', require: false
-gem 'chef-sugar'
-gem 'knife-solo'
-gem 'hashie', '2.1.1'
+gem 'berkshelf', '~> 3.2'
+gem 'chefspec', '~> 4.1'
+gem 'foodcritic', '~> 4.0.0'
+gem 'rake', '>= 10.2'
+gem 'rubocop', '= 0.27.1'
 
 group :integration do
-  gem "test-kitchen", "~> 1.0"
-  gem "kitchen-vagrant"
-  gem "guard-kitchen"
-  gem "kitchen-docker"
+  gem 'guard', '>= 2.6'
+  gem 'guard-foodcritic', '~> 1.0.3'
+  gem 'guard-kitchen'
+  gem 'guard-rspec'
+  gem 'growl' # Also brew cask install growlnotify
+  gem 'guard-rubocop', '>= 1.1'
+  gem 'test-kitchen'
+  gem 'kitchen-vagrant'
+  gem 'chef-sugar'
 end
