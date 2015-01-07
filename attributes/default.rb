@@ -26,8 +26,6 @@ default['ruby']['version'] = '2.1'
 default['consul']['encrypt'] = 'p4T1eTQtKji/Df3VrMMLzg=='
 default['consul']['install_method'] = 'binary'
 default['consul']['data_dir'] = '/var/cache/octohost'
-default['consul']['bind_addr'] = '192.168.62.86'
-default['consul']['client_address'] = '192.168.62.86'
 default['consul']['datacenter'] = 'dc1'
 default['consul']['enable_syslog'] = true
 default['consul']['node_name'] = 'octodev-master'
@@ -40,3 +38,6 @@ default['consul']['serve_ui'] = true
 
 default['jq']['url'] = 'http://stedolan.github.io/jq/download/linux64/jq'
 default['jq']['path'] = '/usr/bin/jq'
+
+default['octohost']['consul-template']['version'] = '0.5.1'
+default['octohost']['consul-template']['url'] = "https://github.com/hashicorp/consul-template/releases/download/v#{node['octohost']['consul-template']['version']}/consul-template_#{node['octohost']['consul-template']['version']}_linux_amd64.tar.gz"
