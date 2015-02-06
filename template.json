@@ -45,7 +45,7 @@
               "disk_size": 40960,
               "accelerator": "kvm",
               "format": "raw",
-              "headless": "true",
+              "headless": "false",
               "http_directory": "http",
               "iso_checksum": "4d94f6111b8fe47da94396180ce499d8c0bb44f3",
               "iso_checksum_type": "sha1",
