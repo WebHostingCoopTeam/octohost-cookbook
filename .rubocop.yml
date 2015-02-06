@@ -3,13 +3,12 @@
 AllCops:
   Exclude:
     - Guardfile
-    - Rakefile
     - foodcritic/**/*
     - cookbooks/**/*
     - vendor/**/*
 
 Metrics/LineLength:
-  Max: 200
+  Max: 250
 
 Style/SingleSpaceBeforeFirstArg:
   Enabled: false
