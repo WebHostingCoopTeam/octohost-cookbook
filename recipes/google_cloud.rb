@@ -1,9 +1,9 @@
 # encoding: utf-8
 #
 # Cookbook Name:: octohost
-# Recipe:: rackspace
+# Recipe:: google_cloud
 #
-# Copyright (C) 2014, Darron Froese <darron@froese.org>
+# Copyright (C) 2015, Darron Froese <darron@froese.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 # limitations under the License.
 #
 
-bash 'Update PRIVATE_IP for rackspace.' do
+bash 'Update PRIVATE_IP for GCE.' do
   user 'root'
   cwd '/tmp'
   code <<-EOH
-    sed -i '9s/.*/PRIVATE_IP=\$(ifconfig eth1 \| grep \"inet addr\" \| cut --delimiter=\":\" -f 2 \| cut --delimiter=\" \" -f 1)/' /etc/default/octohost
+    sed -i '9s/.*/PRIVATE_IP=\$(ifconfig eth0 \| grep \"inet addr\" \| cut --delimiter=\":\" -f 2 \| cut --delimiter=\" \" -f 1)/' /etc/default/octohost
   EOH
 end
 

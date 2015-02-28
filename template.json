@@ -3,7 +3,8 @@
         "chef_version": "provisionerless",
         "mirror": "http://releases.ubuntu.com",
         "aws_access_key": "",
-        "aws_secret_key": ""
+        "aws_secret_key": "",
+        "project_id": "{{env `PROJECT_ID`}}"
     },
 
     "builders": [{
@@ -11,7 +12,7 @@
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key` }}",
             "region": "us-west-2",
-            "source_ami": "ami-af401e9f",
+            "source_ami": "ami-895b7fb9",
             "instance_type": "c3.large",
             "ssh_username": "ubuntu",
             "ami_name": "octohost-chef {{timestamp}}"
@@ -78,13 +79,12 @@
             },
             {
               "type": "googlecompute",
-              "project_id": "pacific-vault-481",
-              "bucket_name": "octohost-packer-images",
-              "client_secrets_file": "google.json",
-              "private_key_file": "google.pem",
-              "source_image": "debian-7-wheezy-v20131120",
-              "zone": "us-central1-a",
-              "image_name": "octohost-{{timestamp}}"
+              "project_id": "{{user `project_id`}}",
+              "account_file": "google.json",
+              "source_image": "ubuntu-1404-trusty-v20150128",
+              "zone": "us-central1-f",
+              "image_name": "octohost-{{timestamp}}",
+              "disk_size": 40
             }],
 
     "provisioners": [
@@ -108,6 +108,7 @@
       },
       {
         "type": "chef-solo",
+      "install_command": "curl -L https://www.opscode.com/chef/install.sh | sudo bash -s -- -v 11.16.4",
         "cookbook_paths": ["./vendor/cookbooks"],
         "run_list": [ "octohost" ]
       }
