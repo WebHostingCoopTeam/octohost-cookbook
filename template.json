@@ -115,9 +115,12 @@
             }],
 
     "provisioners": [
+      {
         "type": "shell",
         "inline": ["sudo apt-get clean && sudo apt-get update && sudo apt-get -y upgrade"]
-      },{
+      },
+      {
+        "scripts": [
           "scripts/ubuntu/update.sh",
           "scripts/ubuntu/requirements.sh",
           "scripts/common/sshd.sh",
