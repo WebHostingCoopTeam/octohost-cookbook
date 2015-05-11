@@ -4,15 +4,19 @@
         "mirror": "http://releases.ubuntu.com",
         "aws_access_key": "",
         "aws_secret_key": "",
-        "project_id": "{{env `PROJECT_ID`}}"
+        "project_id": "{{env `GCE_PROJECT_ID`}}",
+        "gce_account_file": "{{env `GCE_ACCOUNT_FILE`}}",
+        "publish_settings_path": "{{env `AZURE_PUBLISH_SETTINGS`}}"
     },
-
+    "push": {
+      "name": "darron/octohost"
+    },
     "builders": [{
             "type": "amazon-ebs",
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key` }}",
             "region": "us-west-2",
-            "source_ami": "ami-895b7fb9",
+            "source_ami": "ami-51526761",
             "instance_type": "c3.large",
             "ssh_username": "ubuntu",
             "ami_name": "octohost-chef {{timestamp}}"
@@ -74,23 +78,46 @@
               "region": "iad",
               "ssh_username": "root",
               "image_name": "octohost-chef {{timestamp}}",
-              "source_image": "10ad1831-987f-416e-af08-4ad5939d0862",
+              "source_image": "bf182836-221e-47fa-ae58-cc6f4f96b6cb",
               "flavor": "3"
             },
             {
               "type": "googlecompute",
               "project_id": "{{user `project_id`}}",
-              "account_file": "google.json",
+              "account_file": "{{user `gce_account_file`}}",
               "source_image": "ubuntu-1404-trusty-v20150128",
               "zone": "us-central1-f",
               "image_name": "octohost-{{timestamp}}",
               "disk_size": 40
+            },
+            {
+              "type": "azure",
+              "publish_settings_path":    "{{user `publish_settings_path`}}",
+              "subscription_name":    "Free Trial",
+              "storage_account":  "octohost",
+              "storage_account_container":    "images",
+              "os_type":  "Linux",
+              "os_image_label":   "Ubuntu Server 14.04 LTS",
+              "location": "South Central US",
+              "instance_size":    "Medium",
+              "user_image_label": "octohost-{{timestamp}}"
+            },
+            {
+              "type": "virtualbox-iso",
+              "guest_os_type": "Ubuntu_64",
+              "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.2-server-amd64.iso",
+              "iso_checksum": "83aabd8dcf1e8f469f3c72fff2375195",
+              "iso_checksum_type": "md5",
+              "ssh_username": "packer",
+              "ssh_password": "packer",
+              "ssh_wait_timeout": "30s",
+              "shutdown_command": "echo 'packer' | sudo -S shutdown -P now"
             }],
 
     "provisioners": [
-      {
-        "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
-        "scripts": [
+        "type": "shell",
+        "inline": ["sudo apt-get clean && sudo apt-get update && sudo apt-get -y upgrade"]
+      },{
           "scripts/ubuntu/update.sh",
           "scripts/ubuntu/requirements.sh",
           "scripts/common/sshd.sh",
@@ -108,9 +135,8 @@
       },
       {
         "type": "chef-solo",
-      "install_command": "curl -L https://www.opscode.com/chef/install.sh | sudo bash -s -- -v 11.16.4",
-        "cookbook_paths": ["./vendor/cookbooks"],
-        "run_list": [ "octohost" ]
-      }
-    ]
+      "install_command": "curl -L https://www.opscode.com/chef/install.sh | sudo bash",
+      "cookbook_paths": ["./vendor/cookbooks"],
+      "run_list": [ "octohost" ]
+    }]
 }

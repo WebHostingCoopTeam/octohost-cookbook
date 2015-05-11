@@ -21,25 +21,21 @@
 default['vagrant']['keys'] = 'https://raw.github.com/webhostingcoopteam/keys/master/keys'
 default['git']['keys'] = 'https://raw.github.com/webhostingcoopteam/keys/master/gitreceive-keys'
 
-default['ruby']['version'] = '2.1'
-
 default['consul']['encrypt'] = 'p4T1eTQtKji/Df3VrMMLzg=='
-default['consul']['install_method'] = 'binary'
 default['consul']['data_dir'] = '/var/cache/octohost'
 default['consul']['datacenter'] = 'dc1'
 default['consul']['enable_syslog'] = true
 default['consul']['node_name'] = 'octodev-master'
-default['consul']['install_dir'] = '/usr/local/bin'
 default['consul']['recursor'] = '8.8.8.8'
-default['consul']['service_user'] = 'root'
-default['consul']['service_group'] = 'root'
-
-default['consul']['serve_ui'] = true
+default['consul']['server'] = true
+default['consul']['bootstrap'] = true
+default['consul']['ui_dir'] = '/var/lib/consul/ui'
+default['consul']['client_addr'] = '0.0.0.0'
 
 default['jq']['url'] = 'http://stedolan.github.io/jq/download/linux64/jq'
 default['jq']['path'] = '/usr/bin/jq'
 
-default['octohost']['consul-template']['version'] = '0.5.1'
+default['octohost']['consul-template']['version'] = '0.7.0'
 default['octohost']['consul-template']['url'] = "https://github.com/hashicorp/consul-template/releases/download/v#{node['octohost']['consul-template']['version']}/consul-template_#{node['octohost']['consul-template']['version']}_linux_amd64.tar.gz"
 
 default['octohost']['chefdk_url'] =  'https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_0.4.0-1_amd64.deb'

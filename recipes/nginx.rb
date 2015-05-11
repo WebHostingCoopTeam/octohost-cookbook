@@ -1,9 +1,9 @@
 # encoding: utf-8
 #
 # Cookbook Name:: octohost
-# Recipe:: openresty
+# Recipe:: nginx
 #
-# Copyright (C) 2014, Darron Froese <darron@froese.org>
+# Copyright (C) 2015, Darron Froese <darron@froese.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,8 +18,18 @@
 # limitations under the License.
 #
 
+include_recipe 'python'
+
+package 'libgd2-noxpm-dev'
+
+package 'libssl0.9.8'
+
+package 'nginx' do
+  action :install
+end
+
 service 'nginx' do
-  supports :status => true # rubocop:disable HashSyntax
+  supports status: true
   action [:disable, :stop]
 end
 
@@ -32,9 +42,61 @@ end
 directory '/etc/nginx/additional-vhosts' do
   owner 'root'
   group 'root'
-  mode '0755'
+  mode 00755
   recursive true
   action :create
+end
+
+directory '/var/www/default' do
+  owner 'root'
+  group 'root'
+  mode 00755
+  recursive true
+  action :create
+end
+
+cookbook_file '/var/www/default/index.html' do
+  owner 'root'
+  group 'root'
+  mode 00644
+end
+
+cookbook_file '/etc/nginx/additional-vhosts/00default.conf' do
+  owner 'root'
+  group 'root'
+  mode 00644
+  notifies :restart, 'service[proxy]', :delayed
+end
+
+directory '/etc/nginx/containers' do
+  owner 'root'
+  group 'root'
+  mode 00755
+  recursive true
+  action :create
+end
+
+directory '/etc/nginx/templates' do
+  owner 'root'
+  group 'root'
+  mode 00755
+  recursive true
+  action :create
+end
+
+%w(
+  /etc/nginx/template.ctmpl
+  /etc/nginx/templateSSL.ctmpl
+  /etc/nginx/template.cfg
+  /etc/nginx/template.watch
+  /etc/nginx/template.kv.watch
+).each do |tmpl|
+  cookbook_file tmpl do
+    owner 'root'
+    group 'root'
+    mode 00755
+    action :create
+  end
 end
 
 cookbook_file '/etc/nginx/proxy.conf' do
@@ -125,17 +187,10 @@ bash 'unzip the GeoIP files' do
 end
 
 service 'proxy' do
-  supports :status => true # rubocop:disable HashSyntax
+  supports status: true
   action [:enable, :start]
 end
 
-# Add ngxtop
-package 'python-pip'
-
-bash 'install ngxtop' do
-  user 'root'
-  cwd '/tmp'
-  code <<-EOH
-    pip install ngxtop
-  EOH
+python_pip 'ngxtop' do
+  action :install
 end
