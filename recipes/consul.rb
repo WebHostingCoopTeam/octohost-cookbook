@@ -41,7 +41,7 @@ service 'consul' do
   action [:enable, :start]
 end
 
-package 'consul-webui'
+#package 'consul-webui'
 
 remote_file node['jq']['path'] do
   source node['jq']['url']
