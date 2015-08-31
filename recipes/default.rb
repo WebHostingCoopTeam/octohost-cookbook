@@ -28,6 +28,10 @@ include_recipe 'ubuntu_base::default'
 
 include_recipe 'octobase::default'
 
+include_recipe 'zfs_linux::default'
+
+include_recipe 'octohost::vault'
+
 include_recipe 'octohost::docker'
 
 include_recipe 'octohost::logging'
@@ -49,6 +53,8 @@ include_recipe 'octohost::private_ip' unless ec2?
 include_recipe 'octohost::rackspace' if rackspace?
 
 include_recipe 'octohost::google_cloud' if gce?
+
+include_recipe 'octohost::digitalocean' if digitalocean?
 
 include_recipe 'octohost::final'
 

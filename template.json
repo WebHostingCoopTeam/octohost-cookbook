@@ -78,7 +78,7 @@
               "region": "iad",
               "ssh_username": "root",
               "image_name": "octohost-chef {{timestamp}}",
-              "source_image": "bf182836-221e-47fa-ae58-cc6f4f96b6cb",
+              "source_image": "28153eac-1bae-4039-8d9f-f8b513241efe",
               "flavor": "3"
             },
             {
@@ -129,7 +129,6 @@
           "scripts/common/minimize.sh"
         ],
         "type": "shell",
-        "only": ["qemu"],
         "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
         "environment_vars": [ "CHEF_VERSION={{user `chef_version`}}" ]
       },

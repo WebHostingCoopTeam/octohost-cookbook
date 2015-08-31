@@ -7,6 +7,8 @@ if [[ "$UBUNTU_VERSION" == '12.04' ]]; then
   rm -rf /var/lib/apt/lists
 fi
 
+apt-get clean && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\" --force-yes -y upgrade
+
 # Update the package list
 apt-get update
 
